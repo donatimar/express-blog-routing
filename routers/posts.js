@@ -36,13 +36,13 @@ let posts = [
 
 // Index
 router.get("/", (req, res) => {
-  res.json({ posts, postCount: posts.length });
+  res.json({ message: "Lista dei post", posts, postCount: posts.length });
 });
 
 // Show
 router.get("/:index", (req, res) => {
   const index = parseInt(req.params.index);
-  res.json(posts[index]);
+  res.json({ message: `Dettagli del post ${index}`, post: posts[index] });
 });
 
 // Create
@@ -50,7 +50,7 @@ router.post("/", (req, res) => {
   const { titolo, contenuto, immagine, tags } = req.body;
   const newPost = { titolo, contenuto, immagine, tags };
   posts.push(newPost);
-  res.json(newPost);
+  res.json({ message: "Post creato", post: newPost });
 });
 
 // Update
@@ -59,14 +59,14 @@ router.put("/:index", (req, res) => {
   const { titolo, contenuto, immagine, tags } = req.body;
   const updatedPost = { titolo, contenuto, immagine, tags };
   posts[index] = updatedPost;
-  res.json(updatedPost);
+  res.json({ message: `Post ${index} aggiornato`, post: updatedPost });
 });
 
 // Delete
 router.delete("/:index", (req, res) => {
   const index = parseInt(req.params.index);
   const deletedPost = posts.splice(index, 1);
-  res.json({ message: "Post eliminato", post: deletedPost });
+  res.json({ message: `Cancellazione del post ${index}`, post: deletedPost });
 });
 
 module.exports = router;
